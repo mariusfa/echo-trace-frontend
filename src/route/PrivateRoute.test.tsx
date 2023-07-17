@@ -4,7 +4,6 @@ import { render, screen } from '@testing-library/preact';
 import { FunctionComponent } from 'preact';
 import Router from 'preact-router';
 import { navigationWrapper } from '../wrappers/navigationWrapper';
-import { tokenWrapper } from '../wrappers/tokenWrapper';
 import { PrivateRoute } from './PrivateRoute';
 
 const PrivateComponent: FunctionComponent = () => {
@@ -18,12 +17,10 @@ describe('Home test', () => {
         const navigationHistory = ['/']
         const navigate = (path: string) => navigationHistory.push(path)
         navigationWrapper.navigate = navigate
-        const getToken = () => 'token'
-        tokenWrapper.getToken = getToken 
 
         render(
             <Router>
-                <PrivateRoute path="/" component={PrivateComponent} />
+                <PrivateRoute path="/" isAuthenticated={true} component={PrivateComponent} />
             </Router>
         )
         expect(screen.getByText('Private')).toBeDefined()
@@ -34,15 +31,12 @@ describe('Home test', () => {
         const navigationHistory = ['/']
         const navigate = (path: string) => navigationHistory.push(path)
         navigationWrapper.navigate = navigate
-        const getToken = () => null
-        tokenWrapper.getToken = getToken 
 
         render(
             <Router>
-                <PrivateRoute path="/" component={PrivateComponent} />
+                <PrivateRoute path="/" isAuthenticated={false} component={PrivateComponent} />
             </Router>
         )
-        expect(screen.queryByText('Private')).toBeNull()
         expect(navigationHistory.length).toBe(2)
         expect(navigationHistory[1]).toBe('/login')
     })

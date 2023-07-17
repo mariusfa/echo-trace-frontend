@@ -1,19 +1,20 @@
 import { FunctionComponent } from 'preact';
 import { RoutableProps } from 'preact-router';
 import { navigationWrapper } from '../wrappers/navigationWrapper';
-import { tokenWrapper } from '../wrappers/tokenWrapper';
+import { useEffect } from 'preact/hooks';
 
 interface Props extends RoutableProps {
     component: FunctionComponent
+    isAuthenticated: boolean
 }
 
-export const PrivateRoute: FunctionComponent<Props> = ({component: Component, ...rest}) => {
-    const isAuthenticaterd = tokenWrapper.getToken() !== null
+export const PrivateRoute: FunctionComponent<Props> = ({ component: Component, isAuthenticated, ...rest }) => {
+    useEffect(() => {
+        if (!isAuthenticated) {
+            navigationWrapper.navigate('/login')
+        }
+    }, [isAuthenticated])
 
-    if (!isAuthenticaterd) {
-        navigationWrapper.navigate('/login')
-        return null
-    }
     return <Component {...rest} />
 
 }
