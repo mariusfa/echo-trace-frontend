@@ -1,8 +1,8 @@
-
 import { describe, expect, test } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/preact';
 import { Register } from './Register';
 import userEvent from '@testing-library/user-event';
+import { fetchWrapper } from '../../wrappers/fetchWrapper';
 
 describe('Register test', () => {
     test('should render Register', () => {
@@ -15,6 +15,9 @@ describe('Register test', () => {
     })
 
     test('should do a register user', async () => {
+        const mockRegister = (url: string, data: object) => Promise.resolve({ status: 200, data: null })
+        fetchWrapper.postJson = mockRegister
+
         render(<Register />)
 
         const username = screen.getByLabelText('Username')
