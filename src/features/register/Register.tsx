@@ -11,6 +11,11 @@ export const Register: FunctionalComponent = () => {
         password: '',
         confirmPassword: '',
     });
+    const [formErrors, setFormErrors] = useState({
+        username: '',
+        password: '',
+        confirmPassword: '',
+    });
 
     const handleChange = (event: Event) => {
         const { name, value } = event.target as HTMLInputElement;
@@ -22,15 +27,44 @@ export const Register: FunctionalComponent = () => {
 
     const handleRegister = async (event: Event) => {
         event.preventDefault();
+        const errors = validateForm();
+        if (errors.username || errors.password || errors.confirmPassword) {
+            setFormErrors(errors);
+            return;
+        }
         const registerDTO = {
             username: formValues.username,
             password: formValues.password,
         }
-        const { status } = await fetchWrapper.postJson('/user/register', formValues);
+        const { status } = await fetchWrapper.postJson('/user/register', registerDTO);
         if (status === 200) {
             setRegisterSuccess(true);
         }
     }
+
+    const validateForm = () => {
+        const { username, password, confirmPassword } = formValues;
+        const errors = {
+            username: '',
+            password: '',
+            confirmPassword: '',
+        }
+        if (!username) {
+            errors.username = 'Username is required'
+        }
+        if (!password) {
+            errors.password = 'Password is required'
+        }
+        if (!confirmPassword) {
+            errors.confirmPassword = 'Confirm Password is required'
+        }
+        if (password !== confirmPassword) {
+            errors.password = 'Password and Confirm Password must match'
+            errors.confirmPassword = 'Password and Confirm Password must match'
+        }
+        return errors;
+    }
+
 
     if (registerSuccess) {
         return <RegistrationSuccess />
@@ -46,18 +80,21 @@ export const Register: FunctionalComponent = () => {
                             Username
                         </label>
                         <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" name="username" type="text" placeholder="Username" value={formValues.username} onChange={handleChange} />
+                        {formErrors.username && <p class="text-red-500 text-xs italic">{formErrors.username}</p>}
                     </div>
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
                             Password
                         </label>
                         <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" name="password" type="password" placeholder="Password" value={formValues.password} onChange={handleChange} />
+                        {formErrors.password && <p class="text-red-500 text-xs italic">{formErrors.password}</p>}
                     </div>
                     <div class="mb-6">
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="confirmPassword">
                             Confirm Password
                         </label>
                         <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="confirmPassword" name="confirmPassword" type="password" placeholder="Confirm Password" value={formValues.confirmPassword} onChange={handleChange} />
+                        {formErrors.confirmPassword && <p class="text-red-500 text-xs italic">{formErrors.confirmPassword}</p>}
                     </div>
                     <div class="flex items-center justify-between">
                         <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2" type="submit">

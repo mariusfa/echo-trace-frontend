@@ -15,7 +15,7 @@ describe('Register test', () => {
     })
 
     test('should do a register user', async () => {
-        const mockRegister = (url: string, data: object) => Promise.resolve({ status: 200, data: null })
+        const mockRegister = (_url: string, _data: object) => Promise.resolve({ status: 200, data: null })
         fetchWrapper.postJson = mockRegister
 
         render(<Register />)
@@ -37,5 +37,35 @@ describe('Register test', () => {
         await waitFor(() => {
             expect(screen.getByText('Registration Successful!')).toBeDefined()
         }, { timeout: 3000 })
+    })
+
+    test('should fail to register user - show validation messages for empty input fields', async () => {
+        render(<Register />)
+        const registerButton = screen.getByRole('button', { name: 'Register' })
+        await userEvent.click(registerButton)
+        expect(screen.getByText('Username is required')).toBeDefined()
+        expect(screen.getByText('Password is required')).toBeDefined()
+        expect(screen.getByText('Confirm Password is required')).toBeDefined()
+    })
+
+    test('should fail to register user - show validation messages for password mismatch', async () => {
+        const user = {
+            username: 'test',
+            password: 'test-password',
+            confirmPassword: 'test-password-2',
+        }
+        render(<Register />)
+
+        const username = screen.getByLabelText('Username')
+        const password = screen.getByLabelText('Password')
+        const confirmPassword = screen.getByLabelText('Confirm Password')
+        await userEvent.type(username, user.username)
+        await userEvent.type(password, user.password)
+        await userEvent.type(confirmPassword, user.confirmPassword)
+
+        const registerButton = screen.getByRole('button', { name: 'Register' })
+        await userEvent.click(registerButton)
+
+        expect(screen.queryAllByText('Password and Confirm Password must match').length).toBe(2)
     })
 })
