@@ -3,6 +3,7 @@ import { Link } from 'preact-router';
 import { useState } from 'preact/hooks';
 import { fetchWrapper } from '../../wrappers/fetchWrapper';
 import { RegistrationSuccess } from './RegistrationSuccess';
+import { GeneralError } from '../../components/general-error/GeneralError';
 
 export const Register: FunctionalComponent = () => {
     const [registerSuccess, setRegisterSuccess] = useState(false);
@@ -16,6 +17,7 @@ export const Register: FunctionalComponent = () => {
         password: '',
         confirmPassword: '',
     });
+    const [showGeneralError, setShowGeneralError] = useState(false);
 
     const handleChange = (event: Event) => {
         const { name, value } = event.target as HTMLInputElement;
@@ -27,18 +29,34 @@ export const Register: FunctionalComponent = () => {
 
     const handleRegister = async (event: Event) => {
         event.preventDefault();
+
         const errors = validateForm();
         if (errors.username || errors.password || errors.confirmPassword) {
             setFormErrors(errors);
             return;
         }
+
         const registerDTO = {
             username: formValues.username,
             password: formValues.password,
         }
-        const { status } = await fetchWrapper.postJson('/user/register', registerDTO);
-        if (status === 200) {
-            setRegisterSuccess(true);
+        try {
+            const { status } = await fetchWrapper.postJson('/user/register', registerDTO);
+
+            if (status === 409) {
+                setFormErrors({
+                    ...formErrors,
+                    username: 'Username is already taken'
+                })
+            } else if (status === 200) {
+                setRegisterSuccess(true);
+            } else {
+                setShowGeneralError(true);
+            }
+
+        } catch (error) {
+            setShowGeneralError(true);
+
         }
     }
 
@@ -65,6 +83,9 @@ export const Register: FunctionalComponent = () => {
         return errors;
     }
 
+    if (showGeneralError) {
+        return <GeneralError />
+    }
 
     if (registerSuccess) {
         return <RegistrationSuccess />
@@ -79,7 +100,7 @@ export const Register: FunctionalComponent = () => {
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
                             Username
                         </label>
-                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" name="username" type="text" placeholder="Username" value={formValues.username} onChange={handleChange} />
+                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="username" name="username" type="text" placeholder="Username" value={formValues.username} onChange={handleChange} />
                         {formErrors.username && <p class="text-red-500 text-xs italic">{formErrors.username}</p>}
                     </div>
                     <div class="mb-4">

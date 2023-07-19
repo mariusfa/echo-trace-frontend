@@ -68,4 +68,50 @@ describe('Register test', () => {
 
         expect(screen.queryAllByText('Password and Confirm Password must match').length).toBe(2)
     })
+
+    test('should fail to register user - username taken', async () => {
+        const mockRegister = (_url: string, _data: object) => Promise.resolve({ status: 409, data: null })
+        fetchWrapper.postJson = mockRegister
+
+        const user = {
+            username: 'test',
+            password: 'test-password',
+        }
+        render(<Register />)
+
+        const username = screen.getByLabelText('Username')
+        const password = screen.getByLabelText('Password')
+        const confirmPassword = screen.getByLabelText('Confirm Password')
+        await userEvent.type(username, user.username)
+        await userEvent.type(password, user.password)
+        await userEvent.type(confirmPassword, user.password)
+
+        const registerButton = screen.getByRole('button', { name: 'Register' })
+        await userEvent.click(registerButton)
+
+        expect(screen.getByText('Username is already taken')).toBeDefined()
+    })
+
+    test('should fail to register user - server error', async () => {
+        const mockRegister = (_url: string, _data: object) => Promise.resolve({ status: 500, data: null })
+        fetchWrapper.postJson = mockRegister
+
+        const user = {
+            username: 'test',
+            password: 'test-password',
+        }
+        render(<Register />)
+
+        const username = screen.getByLabelText('Username')
+        const password = screen.getByLabelText('Password')
+        const confirmPassword = screen.getByLabelText('Confirm Password')
+        await userEvent.type(username, user.username)
+        await userEvent.type(password, user.password)
+        await userEvent.type(confirmPassword, user.password)
+
+        const registerButton = screen.getByRole('button', { name: 'Register' })
+        await userEvent.click(registerButton)
+
+        expect(screen.getByText('Error:')).toBeDefined()
+    })
 })
