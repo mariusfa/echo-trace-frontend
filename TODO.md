@@ -12,4 +12,3 @@
 - Login
 - Home/events view
 - Profile with api-token
-
