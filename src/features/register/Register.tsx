@@ -6,6 +6,7 @@ import { RegistrationSuccess } from './RegistrationSuccess';
 import { GeneralError } from '../../components/general-error/GeneralError';
 import { InputTextGroup } from '../../components/form/InputTextGroup';
 import { Heading1 } from '../../components/typography/Heading1';
+import { PrimaryButton } from '../../components/buttons/PrimaryButton';
 
 export const Register: FunctionalComponent = () => {
     const [registerSuccess, setRegisterSuccess] = useState(false);
@@ -120,9 +121,10 @@ export const Register: FunctionalComponent = () => {
                 type="password"
             />
             <div class="flex items-center justify-between">
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2" type="submit">
+                {/* <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2" type="submit">
                     Register
-                </button>
+                </button> */}
+                <PrimaryButton label='Register' type='submit' />
                 <Link class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="/login">
                     Already registered? Sign In
                 </Link>
