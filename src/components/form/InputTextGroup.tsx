@@ -6,7 +6,7 @@ interface Props {
     value: string;
     onChange: (event: Event) => void;
     error: string;
-    type: string;
+    type?: string;
 }
 
 export const InputTextGroup: FunctionalComponent<Props> = ({ label, name, value, onChange, error, type = 'text' }) => {
