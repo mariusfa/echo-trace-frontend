@@ -5,6 +5,7 @@ import { fetchWrapper } from '../../wrappers/fetchWrapper';
 import { RegistrationSuccess } from './RegistrationSuccess';
 import { GeneralError } from '../../components/general-error/GeneralError';
 import { InputTextGroup } from '../../components/form/InputTextGroup';
+import { Heading1 } from '../../components/typography/Heading1';
 
 export const Register: FunctionalComponent = () => {
     const [registerSuccess, setRegisterSuccess] = useState(false);
@@ -94,7 +95,7 @@ export const Register: FunctionalComponent = () => {
 
     return (
         <form class="w-full max-w-md mx-auto bg-white shadow-md rounded px-4 pt-6 pb-8 mb-4" onSubmit={handleRegister}>
-            <h1 class="mb-4 text-gray-700 text-lg font-bold">Register</h1>
+            <Heading1 title="Register" />
             <InputTextGroup
                 label="Username"
                 name="username"
