@@ -7,6 +7,7 @@ import { GeneralError } from '../../components/general-error/GeneralError';
 import { InputTextGroup } from '../../components/form/InputTextGroup';
 import { Heading1 } from '../../components/typography/Heading1';
 import { PrimaryButton } from '../../components/buttons/PrimaryButton';
+import { RoundedBoxContainer } from '../../components/containers/RoundedBoxContainer';
 
 export const Register: FunctionalComponent = () => {
     const [registerSuccess, setRegisterSuccess] = useState(false);
@@ -95,37 +96,39 @@ export const Register: FunctionalComponent = () => {
     }
 
     return (
-        <form class="w-full max-w-md mx-auto bg-white shadow-md rounded px-4 pt-6 pb-8 mb-4" onSubmit={handleRegister}>
-            <Heading1 title="Register" />
-            <InputTextGroup
-                label="Username"
-                name="username"
-                value={formValues.username}
-                onChange={handleChange}
-                error={formErrors.username}
-            />
-            <InputTextGroup
-                label="Password"
-                name="password"
-                value={formValues.password}
-                onChange={handleChange}
-                error={formErrors.password}
-                type="password"
-            />
-            <InputTextGroup
-                label="Confirm Password"
-                name="confirmPassword"
-                value={formValues.confirmPassword}
-                onChange={handleChange}
-                error={formErrors.confirmPassword}
-                type="password"
-            />
-            <div class="flex items-center justify-between">
-                <PrimaryButton label='Register' type='submit' />
-                <Link class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="/login">
-                    Already registered? Sign In
-                </Link>
-            </div>
-        </form>
+        <RoundedBoxContainer md={true}>
+            <form class="" onSubmit={handleRegister}>
+                <Heading1 title="Register" />
+                <InputTextGroup
+                    label="Username"
+                    name="username"
+                    value={formValues.username}
+                    onChange={handleChange}
+                    error={formErrors.username}
+                />
+                <InputTextGroup
+                    label="Password"
+                    name="password"
+                    value={formValues.password}
+                    onChange={handleChange}
+                    error={formErrors.password}
+                    type="password"
+                />
+                <InputTextGroup
+                    label="Confirm Password"
+                    name="confirmPassword"
+                    value={formValues.confirmPassword}
+                    onChange={handleChange}
+                    error={formErrors.confirmPassword}
+                    type="password"
+                />
+                <div class="flex items-center justify-between">
+                    <PrimaryButton label='Register' type='submit' />
+                    <Link class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="/login">
+                        Already registered? Sign In
+                    </Link>
+                </div>
+            </form>
+        </RoundedBoxContainer>
     );
 }
