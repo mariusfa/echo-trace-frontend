@@ -97,7 +97,7 @@ export const Register: FunctionalComponent = () => {
 
     return (
         <RoundedBoxContainer md={true}>
-            <form class="" onSubmit={handleRegister}>
+            <form onSubmit={handleRegister}>
                 <Heading1 title="Register" />
                 <InputTextGroup
                     label="Username"
