@@ -8,7 +8,7 @@ import { navigationWrapper } from '../../wrappers/navigationWrapper';
 
 describe('Login test', () => {
     test('should render Login', () => {
-        render(<Login />)
+        render(<Login setIsAuthenticated={() => {}} />)
 
         expect(screen.getByRole('heading', { name: 'Login' })).toBeDefined();
         expect(screen.getByText('Username')).toBeDefined()
@@ -25,7 +25,7 @@ describe('Login test', () => {
         const history: string[] = []
         navigationWrapper.navigate = (path: string) => history.push(path)
 
-        render(<Login />)
+        render(<Login setIsAuthenticated={() => {}} />)
 
         const username = screen.getByLabelText('Username')
         const password = screen.getByLabelText('Password')

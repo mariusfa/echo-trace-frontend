@@ -9,7 +9,11 @@ import { fetchWrapper } from '../../wrappers/fetchWrapper';
 import { tokenWrapper } from '../../wrappers/tokenWrapper';
 import { navigationWrapper } from '../../wrappers/navigationWrapper';
 
-export const Login: FunctionalComponent = () => {
+interface Props {
+    setIsAuthenticated: (isAuthenticated: boolean) => void;
+}
+
+export const Login: FunctionalComponent<Props> = ({setIsAuthenticated}) => {
     const [formValues, setFormValues] = useState({
         username: '',
         password: '',
@@ -48,6 +52,7 @@ export const Login: FunctionalComponent = () => {
             if (status === 200) {
                 const token = (data as any).token;
                 tokenWrapper.setToken(token);
+                setIsAuthenticated(true);
                 navigationWrapper.navigate('/');
             }
         } catch (error) {

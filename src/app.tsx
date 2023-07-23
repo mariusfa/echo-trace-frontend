@@ -14,18 +14,16 @@ export const App: FunctionComponent = () => {
 
     useEffect(() => {
         setIsAuthenticated(tokenWrapper.getToken() !== null)
-    }, []);
 
-    useEffect(() => {
         const checkToken = async () => {
             const isValid = await isValidToken()
+            
             if (!isValid) {
                 tokenWrapper.removeToken()
                 setIsAuthenticated(false)
             }
         }
         checkToken()
-
         const intervalId = setInterval(checkToken, 1000 * 60)
         return () => clearInterval(intervalId)
         
@@ -36,7 +34,7 @@ export const App: FunctionComponent = () => {
             <Header isAuthenticated={isAuthenticated} />
             <Router>
                 <PrivateRoute path="/" isAuthenticated={isAuthenticated} component={Home} />
-                <Login path="/login" />
+                <Login path="/login" setIsAuthenticated={setIsAuthenticated} />
                 <Register path="/register" />
             </Router>
         </div>
