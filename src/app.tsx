@@ -6,10 +6,30 @@ import { Header } from './features/header/Header'
 import { tokenWrapper } from './wrappers/tokenWrapper'
 import { PrivateRoute } from './route/PrivateRoute'
 import { Register } from './features/register/Register'
+import { isValidToken } from './auth/isValidToken'
+import { useEffect, useState } from 'preact/hooks'
 
 export const App: FunctionComponent = () => {
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-    const isAuthenticated = tokenWrapper.getToken() !== null
+    useEffect(() => {
+        setIsAuthenticated(tokenWrapper.getToken() !== null)
+    }, []);
+
+    useEffect(() => {
+        const checkToken = async () => {
+            const isValid = await isValidToken()
+            if (!isValid) {
+                tokenWrapper.removeToken()
+                setIsAuthenticated(false)
+            }
+        }
+        checkToken()
+
+        const intervalId = setInterval(checkToken, 1000 * 60)
+        return () => clearInterval(intervalId)
+        
+    }, []);
 
     return (
         <div class="mx-auto max-w-screen-md p-4">
