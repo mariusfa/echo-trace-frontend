@@ -8,6 +8,7 @@ import { PrivateRoute } from './route/PrivateRoute'
 import { Register } from './features/register/Register'
 import { isValidToken } from './auth/isValidToken'
 import { useEffect, useState } from 'preact/hooks'
+import { Profile } from './features/profile/Profile'
 
 export const App: FunctionComponent = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -34,6 +35,7 @@ export const App: FunctionComponent = () => {
             <Header isAuthenticated={isAuthenticated} />
             <Router>
                 <PrivateRoute path="/" isAuthenticated={isAuthenticated} component={Home} />
+                <PrivateRoute path="/profile" isAuthenticated={isAuthenticated} component={Profile} />
                 <Login path="/login" setIsAuthenticated={setIsAuthenticated} />
                 <Register path="/register" />
             </Router>
