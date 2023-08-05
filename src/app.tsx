@@ -9,13 +9,13 @@ import { Register } from './features/register/Register'
 import { isValidToken } from './auth/isValidToken'
 import { useEffect, useState } from 'preact/hooks'
 import { Profile } from './features/profile/Profile'
+import { EventOverviewData } from './features/event-overview/EventOverviewData'
 
 export const App: FunctionComponent = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(true);
 
     useEffect(() => {
         setIsAuthenticated(tokenWrapper.getToken() !== null)
-        
 
         const checkToken = async () => {
             const isValid = await isValidToken()
@@ -35,7 +35,7 @@ export const App: FunctionComponent = () => {
         <div class="mx-auto max-w-screen-md p-4">
             <Header isAuthenticated={isAuthenticated} />
             <Router>
-                <PrivateRoute path="/" isAuthenticated={isAuthenticated} component={Home} />
+                <PrivateRoute path="/" isAuthenticated={isAuthenticated} component={EventOverviewData} />
                 <PrivateRoute path="/profile" isAuthenticated={isAuthenticated} component={Profile} />
                 <Login path="/login" setIsAuthenticated={setIsAuthenticated} />
                 <Register path="/register" />
