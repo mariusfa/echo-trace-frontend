@@ -22,7 +22,7 @@ export const Profile: FunctionalComponent = () => {
                     </p>
                 </div>
 
-                <hr class="my-4" />
+                <hr class="my-6" />
 
                 <button
                     class="w-full mb-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"

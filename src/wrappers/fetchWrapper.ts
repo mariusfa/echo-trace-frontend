@@ -23,6 +23,7 @@ const getJson = async (url: string) => {
     const response = await fetch(`${apiUrl}${url}`, {
         method: 'GET',
         headers: {
+            'Accept': 'application/json',
             'Content-Type': 'application/json',
             'Authorization': token ? `Bearer ${token}` : ''
         },

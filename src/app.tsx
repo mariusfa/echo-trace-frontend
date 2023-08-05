@@ -11,10 +11,11 @@ import { useEffect, useState } from 'preact/hooks'
 import { Profile } from './features/profile/Profile'
 
 export const App: FunctionComponent = () => {
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [isAuthenticated, setIsAuthenticated] = useState(true);
 
     useEffect(() => {
         setIsAuthenticated(tokenWrapper.getToken() !== null)
+        
 
         const checkToken = async () => {
             const isValid = await isValidToken()
