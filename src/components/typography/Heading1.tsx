@@ -6,6 +6,6 @@ interface Props {
 
 export const Heading1: FunctionalComponent<Props> = ({ title }) => {
     return (
-        <h1 class="mb-4 text-gray-700 text-lg font-bold">{title}</h1>
+        <h1 class="mb-4 text-gray-700 text-xl font-bold">{title}</h1>
     );
 }
