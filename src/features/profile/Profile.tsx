@@ -1,11 +1,11 @@
 import { FunctionalComponent } from 'preact'
+import { RoundedBoxContainer } from '../../components/containers/RoundedBoxContainer'
+import { Heading1 } from '../../components/typography/Heading1'
 
 export const Profile: FunctionalComponent = () => {
     return (
-        <div class="flex flex-col justify-center items-center h-full py-8">
-            <h1 class="mb-6 text-gray-700 text-2xl font-bold">Profile</h1>
-
-            <div class="w-full max-w-md bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <RoundedBoxContainer md={true}>
+                <Heading1 title='Profile'/>
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="apiToken">
                         API Token
@@ -33,7 +33,6 @@ export const Profile: FunctionalComponent = () => {
                 <p class="text-gray-600">
                     Simulation data will be used to view in the events overview. This is just for experimentation purposes.
                 </p>
-            </div>
-        </div>
+            </RoundedBoxContainer>
     )
 }
