@@ -1,6 +1,14 @@
 import { tokenWrapper } from './tokenWrapper';
 
-const apiUrl = 'http://localhost:8080';
+const getApiUrl = () => {
+    if (process.env.NODE_ENV === "development") {
+        return 'http://localhost:8080'
+    } else {
+        return 'https://tbd'
+    }
+}
+
+export const apiUrl = getApiUrl()
 
 const postJson = async (url: string, data: object) => {
     const response = await fetch(`${apiUrl}${url}`, {
