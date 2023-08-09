@@ -1,6 +1,5 @@
 import { FunctionComponent } from 'preact'
 import Router from 'preact-router'
-import { Home } from './features/home/Home'
 import { Login } from './features/login/Login'
 import { Header } from './features/header/Header'
 import { tokenWrapper } from './wrappers/tokenWrapper'

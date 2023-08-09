@@ -19,7 +19,7 @@ export const Login: FunctionalComponent<Props> = ({setIsAuthenticated}) => {
         password: '',
     });
 
-    const [formErrors, setFormErrors] = useState({
+    const [formErrors, _setFormErrors] = useState({
         username: '',
         password: '',
         confirmPassword: '',
@@ -60,8 +60,8 @@ export const Login: FunctionalComponent<Props> = ({setIsAuthenticated}) => {
         }
     }
 
-    const validateForm = () => {
-    };
+    // const validateForm = () => {
+    // };
 
 
     return (
