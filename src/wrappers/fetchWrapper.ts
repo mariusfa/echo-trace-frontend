@@ -4,7 +4,7 @@ const getApiUrl = () => {
     if (process.env.NODE_ENV === "development") {
         return 'http://localhost:8080'
     } else {
-        return 'https://tbd'
+        return 'https://echo-trace-api.up.railway.app'
     }
 }
 
