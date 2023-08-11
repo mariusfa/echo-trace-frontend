@@ -1,5 +1,6 @@
 import { FunctionalComponent } from 'preact';
 import { InputText } from './InputText';
+import { Label } from './Label';
 
 interface Props {
     label: string;
@@ -13,9 +14,7 @@ interface Props {
 export const InputTextGroup: FunctionalComponent<Props> = ({ label, name, value, onChange, error, type = 'text' }) => {
     return (
         <div class="mb-4">
-            <label class="block text-gray-700 text-sm font-bold mb-2" for={name}>
-                {label}
-            </label>
+            <Label label={label} forInput={name} />
             <InputText label={label} name={name} value={value} onChange={onChange} type={type} />
             {error && <p class="text-red-500 text-xs italic">{error}</p>}
         </div>
