@@ -3,6 +3,7 @@ import { RoundedBoxContainer } from '../../components/containers/RoundedBoxConta
 import { Heading1 } from '../../components/typography/Heading1'
 import { useEffect, useState } from 'preact/hooks';
 import { apiUrl, fetchWrapper } from '../../wrappers/fetchWrapper';
+import { InputText } from '../../components/form/InputText';
 
 export const Profile: FunctionalComponent = () => {
     const [apiToken, setApiToken] = useState('');
@@ -23,12 +24,10 @@ export const Profile: FunctionalComponent = () => {
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="apiToken">
                     API Token
                 </label>
-                <input
-                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    id="apiToken"
-                    type="text"
+                <InputText
+                    name='apiToken'
                     value={apiToken}
-                    readOnly
+                    readonly={true}
                 />
                 <p class="mt-2 text-gray-600 text-sm">
                     Use this token to post events to <code>{`${apiUrl}`}/event</code> with DTO <code>{'{'}"name": "my-event-name"{'}'}</code> and header <code>Authorization "Api {apiToken}"</code>.

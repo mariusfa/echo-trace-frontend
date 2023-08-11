@@ -1,7 +1,7 @@
 import { FunctionalComponent } from 'preact';
 
 interface Props {
-    label: string;
+    label?: string;
     name: string;
     value: string;
     onChange?: (event: Event) => void;
