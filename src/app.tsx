@@ -17,6 +17,9 @@ export const App: FunctionComponent = () => {
         setIsAuthenticated(tokenWrapper.getToken() !== null)
 
         const checkToken = async () => {
+            if(!tokenWrapper.getToken()) return
+
+            console.log('checking token')
             const isValid = await isValidToken()
             
             if (!isValid) {
