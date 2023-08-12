@@ -88,7 +88,7 @@ export const Login: FunctionalComponent<Props> = ({setIsAuthenticated}) => {
                     <PrimaryButton label='Login' type='submit' />
                     <Link
                         class='inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800'
-                        href='/login'
+                        href='/register'
                     >
                         Not registered? Register!
                     </Link>
