@@ -8,6 +8,7 @@ import { Link } from 'preact-router';
 import { fetchWrapper } from '../../wrappers/fetchWrapper';
 import { tokenWrapper } from '../../wrappers/tokenWrapper';
 import { navigationWrapper } from '../../wrappers/navigationWrapper';
+import { LinkText } from '../../components/links/LinkText';
 
 interface Props {
     setIsAuthenticated: (isAuthenticated: boolean) => void;
@@ -86,12 +87,9 @@ export const Login: FunctionalComponent<Props> = ({setIsAuthenticated}) => {
 
                 <div class='flex items-center justify-between'>
                     <PrimaryButton label='Login' type='submit' />
-                    <Link
-                        class='inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800'
-                        href='/register'
-                    >
+                    <LinkText href='/register'>
                         Not registered? Register!
-                    </Link>
+                    </LinkText>
                 </div>
             </form>
         </RoundedBoxContainer>

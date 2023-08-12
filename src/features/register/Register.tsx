@@ -8,6 +8,7 @@ import { InputTextGroup } from '../../components/form/InputTextGroup';
 import { Heading1 } from '../../components/typography/Heading1';
 import { PrimaryButton } from '../../components/buttons/PrimaryButton';
 import { RoundedBoxContainer } from '../../components/containers/RoundedBoxContainer';
+import { LinkText } from '../../components/links/LinkText';
 
 export const Register: FunctionalComponent = () => {
     const [registerSuccess, setRegisterSuccess] = useState(false);
@@ -124,9 +125,9 @@ export const Register: FunctionalComponent = () => {
                 />
                 <div class="flex items-center justify-between">
                     <PrimaryButton label='Register' type='submit' />
-                    <Link class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="/login">
-                        Already registered? Sign In
-                    </Link>
+                    <LinkText href='/login'>
+                        Already registered? Sign In!
+                    </LinkText>
                 </div>
             </form>
         </RoundedBoxContainer>
