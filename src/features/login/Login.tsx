@@ -4,7 +4,6 @@ import { Heading1 } from '../../components/typography/Heading1';
 import { useState } from 'preact/hooks';
 import { InputTextGroup } from '../../components/form/InputTextGroup';
 import { PrimaryButton } from '../../components/buttons/PrimaryButton';
-import { Link } from 'preact-router';
 import { fetchWrapper } from '../../wrappers/fetchWrapper';
 import { tokenWrapper } from '../../wrappers/tokenWrapper';
 import { navigationWrapper } from '../../wrappers/navigationWrapper';

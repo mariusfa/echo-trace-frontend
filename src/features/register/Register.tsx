@@ -1,14 +1,13 @@
-import { FunctionalComponent } from 'preact'
-import { Link } from 'preact-router';
+import { FunctionalComponent } from 'preact';
 import { useState } from 'preact/hooks';
-import { fetchWrapper } from '../../wrappers/fetchWrapper';
-import { RegistrationSuccess } from './RegistrationSuccess';
-import { GeneralError } from '../../components/general-error/GeneralError';
-import { InputTextGroup } from '../../components/form/InputTextGroup';
-import { Heading1 } from '../../components/typography/Heading1';
 import { PrimaryButton } from '../../components/buttons/PrimaryButton';
 import { RoundedBoxContainer } from '../../components/containers/RoundedBoxContainer';
+import { InputTextGroup } from '../../components/form/InputTextGroup';
+import { GeneralError } from '../../components/general-error/GeneralError';
 import { LinkText } from '../../components/links/LinkText';
+import { Heading1 } from '../../components/typography/Heading1';
+import { fetchWrapper } from '../../wrappers/fetchWrapper';
+import { RegistrationSuccess } from './RegistrationSuccess';
 
 export const Register: FunctionalComponent = () => {
     const [registerSuccess, setRegisterSuccess] = useState(false);
