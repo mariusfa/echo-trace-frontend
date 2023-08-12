@@ -15,6 +15,7 @@ export const PrivateRoute: FunctionComponent<Props> = ({ component: Component, i
         }
     }, [isAuthenticated])
 
-    return <Component {...rest} />
+    if (!isAuthenticated) return null
 
+    return <Component {...rest} />
 }
