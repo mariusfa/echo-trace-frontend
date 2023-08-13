@@ -5,7 +5,7 @@ import { Profile } from './Profile';
 
 describe('Profile test', () => {
     test('should render Profile', () => {
-        fetchWrapper.getJson = (_url: string) => Promise.resolve({ status: 200, data: {token: 'api-token'} })
+        fetchWrapper.getJson = (_url: string) => Promise.resolve({ status: 200, data: {token: 'api-token'}, fetchError: false })
         render(<Profile />)
         expect(screen.getByRole('heading', { name: 'Profile' })).toBeDefined();
         expect(screen.getByText('API Token')).toBeDefined()

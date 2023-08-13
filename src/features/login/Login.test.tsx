@@ -18,7 +18,7 @@ describe('Login test', () => {
 
     test('should render login successful', async () => {
         const token = 'test-token'
-        const mockLogin = (_url: string, _data: object) => Promise.resolve({ status: 200, data: { token: token } })
+        const mockLogin = (_url: string, _data: object) => Promise.resolve({ status: 200, data: { token: token }, fetchError: false })
         fetchWrapper.postJson = mockLogin
         let tokenStorage = null
         tokenWrapper.setToken = (token: string) => tokenStorage = token
@@ -53,7 +53,7 @@ describe('Login test', () => {
     })
 
     test('should fail to login - show validation messages for wrong credentials', async () => {
-        const mockLogin = (_url: string, _data: object) => Promise.resolve({ status: 401, data: null })
+        const mockLogin = (_url: string, _data: object) => Promise.resolve({ status: 401, data: null, fetchError: false})
         fetchWrapper.postJson = mockLogin
 
         render(<Login setIsAuthenticated={() => {}} />)

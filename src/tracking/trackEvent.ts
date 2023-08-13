@@ -2,6 +2,7 @@ import { apiUrl } from '../wrappers/fetchWrapper';
 
 export const trackEvent = async (event: string) => {
     if (process.env.NODE_ENV === "development") {
+        console.log("Event: " + event)
         return
     }
     try {
