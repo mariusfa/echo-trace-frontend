@@ -9,9 +9,14 @@ import { isValidToken } from './auth/isValidToken'
 import { useEffect, useState } from 'preact/hooks'
 import { Profile } from './features/profile/Profile'
 import { EventOverviewData } from './features/event-overview/EventOverviewData'
+import { trackEvent } from './tracking/trackEvent'
 
 export const App: FunctionComponent = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(true);
+
+    useEffect(() => {
+        trackEvent('pageview')
+    }, []);
 
     useEffect(() => {
         setIsAuthenticated(tokenWrapper.getToken() !== null)
