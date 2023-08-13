@@ -19,10 +19,9 @@ export const Login: FunctionalComponent<Props> = ({setIsAuthenticated}) => {
         password: '',
     });
 
-    const [formErrors, _setFormErrors] = useState({
+    const [formErrors, setFormErrors] = useState({
         username: '',
         password: '',
-        confirmPassword: '',
     });
 
     const handleChange = (event: Event) => {
@@ -36,11 +35,11 @@ export const Login: FunctionalComponent<Props> = ({setIsAuthenticated}) => {
     const handleLogin = async (event: Event) => {
         event.preventDefault();
 
-        // const errors = validateForm();
-        // if (errors.username || errors.password || errors.confirmPassword) {
-        //     setFormErrors(errors);
-        //     return;
-        // }
+        const errors = validateForm();
+        if (errors.username || errors.password) {
+            setFormErrors(errors);
+            return;
+        }
 
         const loginDTO = {
             username: formValues.username,
@@ -60,9 +59,21 @@ export const Login: FunctionalComponent<Props> = ({setIsAuthenticated}) => {
         }
     }
 
-    // const validateForm = () => {
-    // };
-
+    const validateForm = () => {
+        const { username, password} = formValues;
+        const errors = {
+            username: '',
+            password: '',
+            confirmPassword: '',
+        }
+        if (!username) {
+            errors.username = 'Username is required';
+        }
+        if (!password) {
+            errors.password = 'Password is required';
+        }
+        return errors;
+    };
 
     return (
         <RoundedBoxContainer md={true}>
