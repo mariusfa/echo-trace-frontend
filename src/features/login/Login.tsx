@@ -39,7 +39,7 @@ export const Login: FunctionalComponent<Props> = ({ setIsAuthenticated }) => {
         setShowInvalidCredentialsMessage(false);
     };
 
-    const handleLogin = async (event: Event) => {
+    const handleSubmit = async (event: Event) => {
         event.preventDefault();
 
         const errors = validateForm();
@@ -47,7 +47,10 @@ export const Login: FunctionalComponent<Props> = ({ setIsAuthenticated }) => {
             setFormErrors(errors);
             return;
         }
+        await handleLogin();
+    };
 
+    const handleLogin = async () => {
         const loginDTO = {
             username: formValues.username,
             password: formValues.password,
@@ -65,7 +68,8 @@ export const Login: FunctionalComponent<Props> = ({ setIsAuthenticated }) => {
         } else if (status === 401) {
             setShowInvalidCredentialsMessage(true);
         }
-    };
+    }
+
 
     const validateForm = () => {
         const { username, password } = formValues;
@@ -85,7 +89,7 @@ export const Login: FunctionalComponent<Props> = ({ setIsAuthenticated }) => {
 
     return (
         <RoundedBoxContainer md={true}>
-            <form onSubmit={handleLogin}>
+            <form onSubmit={handleSubmit}>
                 <Heading1 title='Login' />
                 {showInvalidCredentialsMessage && <InvalidCredentialsMessage />}
                 <InputTextGroup
