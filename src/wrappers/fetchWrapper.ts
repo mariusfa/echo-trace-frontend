@@ -11,36 +11,47 @@ const getApiUrl = () => {
 export const apiUrl = getApiUrl()
 
 const postJson = async (url: string, data: object) => {
-    const response = await fetch(`${apiUrl}${url}`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-    });
+    const { response, error } = await fetchRaw(url, 'POST', data);
+    if (error) {
+        return { status: null, data: null, fetchError: true }
+    }
     try {
-        data = await response.json();
-        return { status: response.status, data: data }
+        const data = await response!!.json();
+        return { status: response!!.status, data: data, fetchError: false }
     } catch (error) {
-        return { status: response.status, data: null }
+        return { status: response!!.status, data: null, fetchError: false }
     }
 }
 
 const getJson = async (url: string) => {
-    const token = tokenWrapper.getToken();
-    const response = await fetch(`${apiUrl}${url}`, {
-        method: 'GET',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Authorization': token ? `Bearer ${token}` : ''
-        },
-    });
+    const { response, error } = await fetchRaw(url, 'GET');
+    if (error) {
+        return { status: null, data: null, fetchError: true }
+    }
     try {
-        const data = await response.json();
-        return { status: response.status, data: data }
+        const data = await response!!.json();
+        return { status: response!!.status, data: data, fetchError: false }
     } catch (error) {
-        return { status: response.status, data: null }
+        return { status: response!!.status, data: null, fetchError: false }
+    }
+}
+
+const fetchRaw = async (url: string, method: 'GET' | 'POST', data: object | undefined = undefined) => {
+    const token = tokenWrapper.getToken();
+    const headers = {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': token ? `Bearer ${token}` : ''
+    }
+    try {
+        const response = await fetch(`${apiUrl}${url}`, {
+            method: method,
+            headers: headers,
+            body: data ? JSON.stringify(data) : undefined
+        });
+        return { response: response, error: false }
+    } catch (error) {
+        return { response: null, error: true }
     }
 }
 

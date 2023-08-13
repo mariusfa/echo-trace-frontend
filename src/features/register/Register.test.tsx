@@ -15,7 +15,7 @@ describe('Register test', () => {
     })
 
     test('should do a register user', async () => {
-        const mockRegister = (_url: string, _data: object) => Promise.resolve({ status: 200, data: null })
+        const mockRegister = (_url: string, _data: object) => Promise.resolve({ status: 200, data: null, fetchError: false })
         fetchWrapper.postJson = mockRegister
 
         render(<Register />)
@@ -70,7 +70,7 @@ describe('Register test', () => {
     })
 
     test('should fail to register user - username taken', async () => {
-        const mockRegister = (_url: string, _data: object) => Promise.resolve({ status: 409, data: null })
+        const mockRegister = (_url: string, _data: object) => Promise.resolve({ status: 409, data: null, fetchError: false })
         fetchWrapper.postJson = mockRegister
 
         const user = {
@@ -93,7 +93,7 @@ describe('Register test', () => {
     })
 
     test('should fail to register user - server error', async () => {
-        const mockRegister = (_url: string, _data: object) => Promise.resolve({ status: 500, data: null })
+        const mockRegister = (_url: string, _data: object) => Promise.resolve({ status: 500, data: null, fetchError: false })
         fetchWrapper.postJson = mockRegister
 
         const user = {
