@@ -8,21 +8,23 @@ import { fetchWrapper } from '../../wrappers/fetchWrapper';
 import { tokenWrapper } from '../../wrappers/tokenWrapper';
 import { navigationWrapper } from '../../wrappers/navigationWrapper';
 import { LinkText } from '../../components/links/LinkText';
+import { InvalidCredentialsMessage } from './InvalidCredentialsMessage';
 
 interface Props {
     setIsAuthenticated: (isAuthenticated: boolean) => void;
 }
 
-export const Login: FunctionalComponent<Props> = ({setIsAuthenticated}) => {
+export const Login: FunctionalComponent<Props> = ({ setIsAuthenticated }) => {
     const [formValues, setFormValues] = useState({
         username: '',
         password: '',
     });
-
     const [formErrors, setFormErrors] = useState({
         username: '',
         password: '',
     });
+    const [showInvalidCredentialsMessage, setShowInvalidCredentialsMessage] =
+        useState(false);
 
     const handleChange = (event: Event) => {
         const { name, value } = event.target as HTMLInputElement;
@@ -30,6 +32,11 @@ export const Login: FunctionalComponent<Props> = ({setIsAuthenticated}) => {
             ...formValues,
             [name]: value,
         });
+        setFormErrors({
+            ...formErrors,
+            [name]: '',
+        });
+        setShowInvalidCredentialsMessage(false);
     };
 
     const handleLogin = async (event: Event) => {
@@ -44,28 +51,29 @@ export const Login: FunctionalComponent<Props> = ({setIsAuthenticated}) => {
         const loginDTO = {
             username: formValues.username,
             password: formValues.password,
-        }
+        };
 
-        try {
-            const { status, data } = await fetchWrapper.postJson('/user/login', loginDTO);
-            if (status === 200) {
-                const token = (data as any).token;
-                tokenWrapper.setToken(token);
-                setIsAuthenticated(true);
-                navigationWrapper.navigate('/');
-            }
-        } catch (error) {
-            // setShowGeneralError(true);
+        const { status, data } = await fetchWrapper.postJson(
+            '/user/login',
+            loginDTO
+        );
+        if (status === 200) {
+            const token = (data as any).token;
+            tokenWrapper.setToken(token);
+            setIsAuthenticated(true);
+            navigationWrapper.navigate('/');
+        } else if (status === 401) {
+            setShowInvalidCredentialsMessage(true);
         }
-    }
+    };
 
     const validateForm = () => {
-        const { username, password} = formValues;
+        const { username, password } = formValues;
         const errors = {
             username: '',
             password: '',
             confirmPassword: '',
-        }
+        };
         if (!username) {
             errors.username = 'Username is required';
         }
@@ -79,6 +87,7 @@ export const Login: FunctionalComponent<Props> = ({setIsAuthenticated}) => {
         <RoundedBoxContainer md={true}>
             <form onSubmit={handleLogin}>
                 <Heading1 title='Login' />
+                {showInvalidCredentialsMessage && <InvalidCredentialsMessage />}
                 <InputTextGroup
                     label='Username'
                     name='username'

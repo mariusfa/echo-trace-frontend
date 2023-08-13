@@ -52,23 +52,23 @@ describe('Login test', () => {
         expect(screen.getByText('Password is required')).toBeDefined()
     })
 
-    // test('should fail to login - show validation messages for wrong credentials', async () => {
-    //     const mockLogin = (_url: string, _data: object) => Promise.resolve({ status: 401, data: null })
-    //     fetchWrapper.postJson = mockLogin
+    test('should fail to login - show validation messages for wrong credentials', async () => {
+        const mockLogin = (_url: string, _data: object) => Promise.resolve({ status: 401, data: null })
+        fetchWrapper.postJson = mockLogin
 
-    //     render(<Login setIsAuthenticated={() => {}} />)
+        render(<Login setIsAuthenticated={() => {}} />)
 
-    //     const username = screen.getByLabelText('Username')
-    //     const password = screen.getByLabelText('Password')
-    //     const loginButton = screen.getByRole('button', { name: 'Login' })
-    //     const user = {
-    //         username: 'test',
-    //         password: 'test-password',
-    //     }
-    //     await userEvent.type(username, user.username)
-    //     await userEvent.type(password, user.password)
-    //     await userEvent.click(loginButton)
+        const username = screen.getByLabelText('Username')
+        const password = screen.getByLabelText('Password')
+        const loginButton = screen.getByRole('button', { name: 'Login' })
+        const user = {
+            username: 'test',
+            password: 'test-password',
+        }
+        await userEvent.type(username, user.username)
+        await userEvent.type(password, user.password)
+        await userEvent.click(loginButton)
 
-    //     expect(screen.getByText('Username or password is incorrect')).toBeDefined()
-    // })
+        expect(screen.getByText('Username or password is incorrect')).toBeDefined()
+    })
 })
