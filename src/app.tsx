@@ -10,6 +10,7 @@ import { useEffect, useState } from 'preact/hooks'
 import { Profile } from './features/profile/Profile'
 import { EventOverviewData } from './features/event-overview/EventOverviewData'
 import { trackEvent } from './tracking/trackEvent'
+import { EventDetailsData } from './features/event-details/EventDetailsData'
 
 export const App: FunctionComponent = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(true);
@@ -42,6 +43,7 @@ export const App: FunctionComponent = () => {
             <Header isAuthenticated={isAuthenticated} />
             <Router>
                 <PrivateRoute path="/" isAuthenticated={isAuthenticated} component={EventOverviewData} />
+                <PrivateRoute path="/events/:id" isAuthenticated={isAuthenticated} component={EventDetailsData} />
                 <PrivateRoute path="/profile" isAuthenticated={isAuthenticated} component={Profile} />
                 <Login path="/login" setIsAuthenticated={setIsAuthenticated} />
                 <Register path="/register" />
