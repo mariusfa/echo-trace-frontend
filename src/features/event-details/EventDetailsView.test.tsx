@@ -19,5 +19,6 @@ describe('EventOverview test', () => {
             expect(screen.getByText('test')).toBeDefined()
         }, { timeout: 3000 })
         expect(screen.getByText('Count by last 30 days')).toBeDefined();
+        expect(screen.getByText('Delete')).toBeDefined();
     })
 });

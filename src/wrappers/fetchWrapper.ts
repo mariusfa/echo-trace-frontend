@@ -36,7 +36,15 @@ const getJson = async (url: string) => {
     }
 }
 
-const fetchRaw = async (url: string, method: 'GET' | 'POST', data: object | undefined = undefined) => {
+const deleteJson = async (url: string) => {
+    const {response, error} = await fetchRaw(url, 'DELETE');
+    if (error) {
+        return { status: null, data: null, fetchError: true }
+    }
+    return { status: response!!.status, data: null, fetchError: false }
+}
+
+const fetchRaw = async (url: string, method: 'GET' | 'POST' | 'DELETE', data: object | undefined = undefined) => {
     const token = tokenWrapper.getToken();
     const headers = {
         'Accept': 'application/json',
@@ -55,7 +63,9 @@ const fetchRaw = async (url: string, method: 'GET' | 'POST', data: object | unde
     }
 }
 
+
 export const fetchWrapper = {
     postJson: postJson,
-    getJson: getJson
+    getJson: getJson,
+    deleteJson: deleteJson
 }
